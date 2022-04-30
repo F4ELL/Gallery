@@ -1,6 +1,6 @@
 import { TPhoto } from "../types/photo"
 import { storage } from '../libs/firebase'
-import { ref, listAll, getDownloadURL, uploadBytes } from 'firebase/storage'
+import { ref, listAll, getDownloadURL, uploadBytes, getStorage, deleteObject } from 'firebase/storage'
 import { v4 as createId } from 'uuid'
 
 export const getAll = async () => {
@@ -38,4 +38,9 @@ export const Insert = async (file: File) => {
     } else{
         return new Error('Tipo de Arquivo não é permitido.')
     }
+}
+
+export const deletePhoto = async (name: string) => {
+    const photoRef = ref(storage, `images/${name}`)
+    await deleteObject(photoRef)
 }
